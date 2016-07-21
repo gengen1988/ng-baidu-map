@@ -102,3 +102,18 @@ yourModule.controller('TestController', function(BaiduMapService) {
   });
 });
 ```
+
+### map实例
+
+如果需要使用 `new Bmap.Map()` 实例，需要注入 `$scope` 用 `$on()` 获得现有的地图实例。
+
+例子：
+
+```js 
+yourModule.controller('TestController', function($scope) {
+  var self = this;
+  $scope.$on('getMap', function(e, map) {
+    self.map = map;
+  });
+});
+```

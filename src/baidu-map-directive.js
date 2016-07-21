@@ -30,24 +30,25 @@ function BaiduMapDirective($q, baiduMapApi) {
 
     scope.$on('mapready', initialize);
 
-    baiduMapApi.then(function(BMap) {
+    baiduMapApi.then(function (BMap) {
       var map = new BMap.Map(container[0]);
       var center = scope.center;
       var point = new BMap.Point(center.lng, center.lat);
       map.centerAndZoom(point, 11);
       scope.$broadcast('mapready', map);
+      scope.$emit('getMap', map);
     });
 
     return;
 
     function initialize(e, map) {
-      map.addEventListener('dragend', function(type, target) {
+      map.addEventListener('dragend', function (type, target) {
         var center = map.getCenter();
         scope.center = center;
         scope.$apply();
       });
 
-      scope.$watch('center', function(newVal, oldVal) {
+      scope.$watch('center', function (newVal, oldVal) {
         var point = new BMap.Point(newVal.lng, newVal.lat);
         map.panTo(point);
       }, true);
